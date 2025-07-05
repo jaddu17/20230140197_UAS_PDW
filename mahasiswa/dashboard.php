@@ -221,7 +221,8 @@ $notifications = getNotifications($link, $mahasiswa_id);
                 </ul>
             <?php endif; ?>
         </div>
-
+    
+        
         <!-- Grafik Progress (Opsional) -->
         <div class="bg-white p-6 rounded-xl shadow-md mt-8">
             <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
