@@ -105,7 +105,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold text-center mb-6">Login SIMPRAK</h2>
+        <h2 class="text-2xl font-bold text-center mb-6">Login KELASKU</h2>
         <?php
         if(!empty($login_err)){
             echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">' . $login_err . '</div>';
