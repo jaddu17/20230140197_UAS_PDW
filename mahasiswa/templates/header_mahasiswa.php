@@ -10,7 +10,7 @@ check_login_and_role("mahasiswa");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahasiswa Dashboard - SIMPRAK</title>
+    <title>Mahasiswa Dashboard - KELASKU</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         /* Custom styles for sidebar */
@@ -43,7 +43,7 @@ check_login_and_role("mahasiswa");
 
     <!-- Sidebar -->
     <aside class="sidebar fixed h-full bg-indigo-700 text-white p-4 flex flex-col shadow-lg">
-        <div class="text-2xl font-bold mb-8 text-center">SIMPRAK</div>
+        <div class="text-2xl font-bold mb-8 text-center">KELASKU</div>
         <ul class="flex flex-col space-y-4">
             <li>
                 <a href="<?php echo BASE_URL; ?>mahasiswa/dashboard.php"

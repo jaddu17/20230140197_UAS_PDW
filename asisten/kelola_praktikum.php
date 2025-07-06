@@ -1,9 +1,18 @@
 <?php
+// Aktifkan output buffering di awal skrip
+ob_start();
+
+// TAMPILKAN SEMUA ERROR (HANYA UNTUK DEBUGGING - HAPUS DI PRODUKSI!)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once '../config.php';
 require_once 'templates/header.php'; // Includes check_login_and_role("asisten")
 
 $nama_praktikum = $deskripsi = "";
 $nama_praktikum_err = $deskripsi_err = "";
+$global_error_message = ""; // Variabel untuk menyimpan pesan error global
 
 // Process CREATE and UPDATE
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -28,9 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("location: kelola_praktikum.php");
                     exit();
                 } else {
-                    echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Terjadi kesalahan saat menambahkan praktikum. Silakan coba lagi nanti.</div>';
+                    $global_error_message = 'Terjadi kesalahan saat menambahkan praktikum. Silakan coba lagi nanti. Error: ' . mysqli_error($link);
                 }
                 mysqli_stmt_close($stmt);
+            } else {
+                $global_error_message = 'Terjadi kesalahan saat menyiapkan statement SQL untuk tambah praktikum. Silakan coba lagi nanti. Error: ' . mysqli_error($link);
             }
         }
     } elseif (isset($_POST["update_praktikum"])) {
@@ -53,9 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("location: kelola_praktikum.php");
                     exit();
                 } else {
-                    echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Terjadi kesalahan saat memperbarui praktikum. Silakan coba lagi nanti.</div>';
+                    $global_error_message = 'Terjadi kesalahan saat memperbarui praktikum. Silakan coba lagi nanti. Error: ' . mysqli_error($link);
                 }
                 mysqli_stmt_close($stmt);
+            } else {
+                $global_error_message = 'Terjadi kesalahan saat menyiapkan statement SQL untuk update praktikum. Silakan coba lagi nanti. Error: ' . mysqli_error($link);
             }
         }
     }
@@ -72,9 +85,11 @@ if (isset($_GET["delete_id"]) && !empty(trim($_GET["delete_id"]))) {
             header("location: kelola_praktikum.php");
             exit();
         } else {
-            echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Terjadi kesalahan saat menghapus praktikum. Silakan coba lagi nanti.</div>';
+            $global_error_message = 'Terjadi kesalahan saat menghapus praktikum. Silakan coba lagi nanti. Error: ' . mysqli_error($link);
         }
         mysqli_stmt_close($stmt);
+    } else {
+        $global_error_message = 'Terjadi kesalahan saat menyiapkan statement SQL untuk hapus praktikum. Silakan coba lagi nanti. Error: ' . mysqli_error($link);
     }
 }
 
@@ -87,11 +102,18 @@ if ($result = mysqli_query($link, $sql)) {
     }
     mysqli_free_result($result);
 } else {
-    echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Oops! Terjadi kesalahan saat mengambil data praktikum.</div>';
+    $global_error_message = 'Oops! Terjadi kesalahan saat mengambil data praktikum. Error: ' . mysqli_error($link);
 }
 ?>
 
-<h1 class="text-3xl font-bold mb-6">Kelola Mata Praktikum</h1>
+<h1 class="text-3xl font-bold mb-6">Kelola Praktikum</h1>
+
+<?php 
+// Tampilkan pesan error global jika ada
+if (!empty($global_error_message)) {
+    echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">' . htmlspecialchars($global_error_message) . '</div>';
+}
+?>
 
 <!-- Form Tambah Praktikum -->
 <div class="bg-white p-6 rounded-lg shadow-md mb-8">
@@ -99,14 +121,14 @@ if ($result = mysqli_query($link, $sql)) {
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="mb-4">
             <label for="nama_praktikum" class="block text-gray-700 text-sm font-bold mb-2">Nama Praktikum:</label>
-            <input type="text" name="nama_praktikum" id="nama_praktikum" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline <?php echo (!empty($nama_praktikum_err)) ? 'border-red-500' : ''; ?>" value="<?php echo $nama_praktikum; ?>">
+            <input type="text" name="nama_praktikum" id="nama_praktikum" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline <?php echo (!empty($nama_praktikum_err)) ? 'border-red-500' : ''; ?>" value="<?php echo htmlspecialchars($nama_praktikum); ?>">
             <span class="text-red-500 text-xs italic"><?php echo $nama_praktikum_err; ?></span>
         </div>
         <div class="mb-4">
             <label for="deskripsi" class="block text-gray-700 text-sm font-bold mb-2">Deskripsi:</label>
-            <textarea name="deskripsi" id="deskripsi" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"><?php echo $deskripsi; ?></textarea>
+            <textarea name="deskripsi" id="deskripsi" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"><?php echo htmlspecialchars($deskripsi); ?></textarea>
         </div>
-        <button type="submit" name="add_praktikum" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Praktikum</button>
+        <button type="submit" name="add_praktikum" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Praktikum</button>
     </form>
 </div>
 
@@ -143,4 +165,8 @@ if ($result = mysqli_query($link, $sql)) {
     <?php endif; ?>
 </div>
 
-<?php require_once 'templates/footer.php'; ?>
+<?php 
+require_once 'templates/footer.php'; 
+// Akhiri output buffering dan kirimkan semua output
+ob_end_flush();
+?>

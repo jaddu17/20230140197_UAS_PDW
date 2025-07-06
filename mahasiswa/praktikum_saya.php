@@ -25,27 +25,32 @@ if ($stmt = mysqli_prepare($link, $sql)) {
             ];
         }
     } else {
-        echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Oops! Terjadi kesalahan saat mengambil data praktikum Anda.</div>';
+        echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Oops! Terjadi kesalahan saat mengambil data praktikum Anda. Error: ' . mysqli_error($link) . '</div>';
     }
     mysqli_stmt_close($stmt);
+} else {
+    echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Terjadi kesalahan saat menyiapkan statement SQL. Error: ' . mysqli_error($link) . '</div>';
 }
 ?>
 
-<h1 class="text-3xl font-bold mb-6">Praktikum yang Saya Ikuti</h1>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Praktikum Saya</h1>
 
-<?php if (empty($enrolled_praktikum_list)): ?>
-    <p class="text-gray-600">Anda belum mendaftar ke praktikum manapun.</p>
-    <p class="text-gray-600">Kunjungi <a href="<?php echo BASE_URL; ?>mahasiswa/katalog_praktikum.php" class="text-blue-500 hover:text-blue-700">Katalog Praktikum</a> untuk mendaftar.</p>
-<?php else: ?>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <?php foreach ($enrolled_praktikum_list as $praktikum): ?>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($praktikum['nama_praktikum']); ?></h3>
-                <p class="text-gray-700 mb-4"><?php echo nl2br(htmlspecialchars($praktikum['deskripsi'])); ?></p>
-                <a href="<?php echo BASE_URL; ?>mahasiswa/detail_praktikum.php?praktikum_id=<?php echo $praktikum['praktikum_id']; ?>" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Lihat Detail & Tugas</a>
-            </div>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+    <?php if (empty($enrolled_praktikum_list)): ?>
+        <p class="text-gray-600">Anda belum mendaftar ke praktikum manapun.</p>
+        <p class="text-gray-600">Kunjungi <a href="<?php echo BASE_URL; ?>mahasiswa/katalog_praktikum.php" class="text-blue-500 hover:text-blue-700">Katalog Praktikum</a> untuk mendaftar.</p>
+    <?php else: ?>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <?php foreach ($enrolled_praktikum_list as $praktikum): ?>
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col"> <!-- Added flex flex-col -->
+                    <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($praktikum['nama_praktikum']); ?></h3>
+                    <p class="text-gray-700 mb-4 flex-grow"><?php echo nl2br(htmlspecialchars($praktikum['deskripsi'])); ?></p> <!-- Added flex-grow -->
+                    <a href="<?php echo BASE_URL; ?>mahasiswa/detail_praktikum.php?praktikum_id=<?php echo $praktikum['praktikum_id']; ?>" 
+                       class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full mt-auto text-center">Lihat Detail & Tugas</a> <!-- Added w-full mt-auto text-center -->
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>
 
 <?php require_once 'templates/footer_mahasiswa.php'; ?>

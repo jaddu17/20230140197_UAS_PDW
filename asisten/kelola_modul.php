@@ -1,10 +1,13 @@
 <?php
+// HAPUS BARIS INI DI LINGKUNGAN PRODUKSI UNTUK MENYEMBUNYIKAN ERROR
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
 require_once '../config.php';
 require_once 'templates/header.php'; // Includes check_login_and_role("asisten")
 
-// Inisialisasi variabel untuk filter
-$filter_praktikum_id = $_GET['filter_praktikum'] ?? '';
-
+// Inisialisasi variabel untuk form tambah modul
 $judul = $deskripsi = "";
 $judul_err = $file_materi_err = $praktikum_id_err = "";
 
@@ -120,17 +123,10 @@ $modul_list = [];
 $sql = "SELECT m.id, m.judul, m.deskripsi, m.file_materi, m.id_praktikum, p.nama_praktikum
         FROM modul m
         JOIN praktikum p ON m.id_praktikum = p.id
-        WHERE m.id_asisten = ?";
+        WHERE m.id_asisten = ?"; // Hanya menampilkan modul yang diunggah oleh asisten yang sedang login
 
 $sql_types = "i";
 $sql_params = [$_SESSION['id']];
-
-// Tambahkan filter berdasarkan praktikum jika dipilih
-if (!empty($filter_praktikum_id)) {
-    $sql .= " AND m.id_praktikum = ?";
-    $sql_types .= "i";
-    $sql_params[] = $filter_praktikum_id;
-}
 
 $sql .= " ORDER BY p.nama_praktikum ASC, m.judul ASC";
 
@@ -157,7 +153,7 @@ if ($stmt = mysqli_prepare($link, $sql)) {
     echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Terjadi kesalahan saat menyiapkan statement SQL untuk mengambil data. Silakan coba lagi nanti. Error: ' . mysqli_error($link) . '</div>';
 }
 
-// Mengambil daftar praktikum untuk dropdown filter dan form tambah modul
+// Mengambil daftar praktikum untuk dropdown form tambah modul
 $all_praktikum = [];
 $sql_praktikum_dropdown = "SELECT id, nama_praktikum FROM praktikum ORDER BY nama_praktikum ASC";
 if ($result_praktikum_dropdown = mysqli_query($link, $sql_praktikum_dropdown)) {
@@ -170,10 +166,10 @@ if ($result_praktikum_dropdown = mysqli_query($link, $sql_praktikum_dropdown)) {
 }
 ?>
 
-<h1 class="text-3xl font-bold mb-6">Kelola Semua Modul Praktikum</h1>
+<h1 class="text-3xl font-bold mb-6">Kelola Modul Praktikum</h1>
 
-<!-- Filter Section -->
-<div class="bg-white p-6 rounded-lg shadow-md mb-8">
+<!-- Filter Section - DIHAPUS -->
+<!-- <div class="bg-white p-6 rounded-lg shadow-md mb-8">
     <h2 class="text-xl font-semibold mb-4">Filter Modul</h2>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
         <div class="mb-4">
@@ -189,7 +185,7 @@ if ($result_praktikum_dropdown = mysqli_query($link, $sql_praktikum_dropdown)) {
         </div>
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Terapkan Filter</button>
     </form>
-</div>
+</div> -->
 
 <!-- Form Tambah Modul Baru -->
 <div class="bg-white p-6 rounded-lg shadow-md mb-8">
@@ -221,7 +217,7 @@ if ($result_praktikum_dropdown = mysqli_query($link, $sql_praktikum_dropdown)) {
             <input type="file" name="file_materi" id="file_materi" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline <?php echo (!empty($file_materi_err)) ? 'border-red-500' : ''; ?>">
             <span class="text-red-500 text-xs italic"><?php echo $file_materi_err; ?></span>
         </div>
-        <button type="submit" name="add_modul" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Modul</button>
+        <button type="submit" name="add_modul" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Modul</button>
     </form>
 </div>
 

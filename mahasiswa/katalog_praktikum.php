@@ -23,12 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (mysqli_stmt_execute($insert)) {
                         $alert_message = ['success', 'Berhasil mendaftar ke praktikum!'];
                     } else {
-                        $alert_message = ['danger', 'Gagal mendaftar.'];
+                        $alert_message = ['danger', 'Gagal mendaftar. Error: ' . mysqli_error($link)];
                     }
                     mysqli_stmt_close($insert);
+                } else {
+                    $alert_message = ['danger', 'Gagal menyiapkan query pendaftaran. Error: ' . mysqli_error($link)];
                 }
             }
             mysqli_stmt_close($stmt);
+        } else {
+            $alert_message = ['danger', 'Gagal menyiapkan query cek pendaftaran. Error: ' . mysqli_error($link)];
         }
     }
 
@@ -41,9 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (mysqli_stmt_execute($delete)) {
                 $alert_message = ['success', 'Berhasil membatalkan pendaftaran.'];
             } else {
-                $alert_message = ['danger', 'Gagal membatalkan pendaftaran.'];
+                $alert_message = ['danger', 'Gagal membatalkan pendaftaran. Error: ' . mysqli_error($link)];
             }
             mysqli_stmt_close($delete);
+        } else {
+            $alert_message = ['danger', 'Gagal menyiapkan query pembatalan. Error: ' . mysqli_error($link)];
         }
     }
 }
@@ -57,6 +63,8 @@ if ($result) {
         $praktikum_list[] = $row;
     }
     mysqli_free_result($result);
+} else {
+    $alert_message = ['danger', "Query error: " . mysqli_error($link)];
 }
 
 // Ambil daftar yang sudah terdaftar
@@ -73,11 +81,14 @@ if ($stmt = mysqli_prepare($link, $sql_cek)) {
     }
     mysqli_stmt_close($stmt);
 } else {
-    echo "<div class='bg-red-100 border border-red-400 text-red-700 px-4 py-3 mb-4'>Query error: " . mysqli_error($link) . "</div>";
+    // Jika ada error di sini, tambahkan ke alert_message jika belum ada
+    if (is_null($alert_message)) {
+        $alert_message = ['danger', "Query error cek pendaftaran: " . mysqli_error($link)];
+    }
 }
 ?>
 
-<div class="container mx-auto px-4">
+<div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-6">Katalog Praktikum</h1>
 
     <?php if ($alert_message): ?>
@@ -96,10 +107,10 @@ if ($stmt = mysqli_prepare($link, $sql_cek)) {
     <?php else: ?>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php foreach ($praktikum_list as $praktikum): ?>
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col"> <!-- Added flex flex-col -->
                     <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($praktikum['nama_praktikum']); ?></h3>
-                    <p class="text-gray-700 mb-4"><?php echo nl2br(htmlspecialchars($praktikum['deskripsi'])); ?></p>
-                    <form method="post">
+                    <p class="text-gray-700 mb-4 flex-grow"><?php echo nl2br(htmlspecialchars($praktikum['deskripsi'])); ?></p> <!-- Added flex-grow -->
+                    <form method="post" class="mt-auto"> <!-- Added mt-auto -->
                         <input type="hidden" name="praktikum_id" value="<?php echo $praktikum['id']; ?>">
                         <?php if (in_array($praktikum['id'], $praktikum_terdaftar)): ?>
                             <button type="submit" name="batal"

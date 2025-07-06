@@ -62,10 +62,11 @@ function getMahasiswaStats($link, $mahasiswa_id) {
     }
 
     // 4. Hitung tugas yang terlambat dikumpulkan (opsional)
+    // Pastikan kolom 'batas_waktu' ada di tabel 'modul' dan 'tanggal_upload' di tabel 'laporan'
     $sql = "SELECT COUNT(DISTINCT m.id) as total
             FROM modul m
             JOIN laporan l ON m.id = l.id_modul
-            WHERE l.id_user = ? AND l.tanggal_upload > m.batas_waktu";
+            WHERE l.id_user = ? AND l.tanggal_kumpul > m.batas_waktu"; // Menggunakan tanggal_kumpul
     if ($stmt = mysqli_prepare($link, $sql)) {
         mysqli_stmt_bind_param($stmt, "i", $mahasiswa_id);
         mysqli_stmt_execute($stmt);
@@ -79,37 +80,9 @@ function getMahasiswaStats($link, $mahasiswa_id) {
     return $stats;
 }
 
-// Ambil notifikasi terbaru
-function getNotifications($link, $mahasiswa_id) {
-    $notifications = [];
-    
-    $sql = "SELECT 
-                n.id, n.judul, n.deskripsi, n.tanggal, n.dibaca,
-                m.judul as modul_judul, m.id as modul_id,
-                p.nama_praktikum
-            FROM notifikasi n
-            LEFT JOIN modul m ON n.modul_id = m.id
-            LEFT JOIN praktikum p ON m.id_praktikum = p.id
-            WHERE n.user_id = ? AND n.role = 'mahasiswa'
-            ORDER BY n.tanggal DESC
-            LIMIT 5";
-    
-    if ($stmt = mysqli_prepare($link, $sql)) {
-        mysqli_stmt_bind_param($stmt, "i", $mahasiswa_id);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        while ($row = mysqli_fetch_assoc($result)) {
-            $notifications[] = $row;
-        }
-        mysqli_stmt_close($stmt);
-    }
-    
-    return $notifications;
-}
-
 // Ambil data
 $stats = getMahasiswaStats($link, $mahasiswa_id);
-$notifications = getNotifications($link, $mahasiswa_id);
+// Notifikasi dan progress dihapus, jadi tidak perlu memanggil fungsi getNotifications
 ?>
 
 <!DOCTYPE html>
@@ -130,7 +103,7 @@ $notifications = getNotifications($link, $mahasiswa_id);
         </div>
 
         <!-- Statistik -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
             <!-- Praktikum Diikuti -->
             <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center hover:shadow-lg transition-shadow border-l-4 border-blue-500">
                 <div class="text-5xl font-extrabold text-blue-600"><?= $stats['praktikum_diikuti'] ?></div>
@@ -168,8 +141,8 @@ $notifications = getNotifications($link, $mahasiswa_id);
             </div>
         </div>
 
-        <!-- Notifikasi Terbaru -->
-        <div class="bg-white p-6 rounded-xl shadow-md">
+        <!-- Notifikasi Terbaru - DIHAPUS -->
+        <!-- <div class="bg-white p-6 rounded-xl shadow-md">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-2xl font-bold text-gray-800 flex items-center">
                     <i class="fas fa-bell mr-2 text-blue-500"></i> Notifikasi Terbaru
@@ -220,18 +193,18 @@ $notifications = getNotifications($link, $mahasiswa_id);
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
-        </div>
-    
+        </div> -->
         
-        <!-- Grafik Progress (Opsional) -->
-        <div class="bg-white p-6 rounded-xl shadow-md mt-8">
+        
+        <!-- Grafik Progress (Opsional) - DIHAPUS -->
+        <!-- <div class="bg-white p-6 rounded-xl shadow-md mt-8">
             <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <i class="fas fa-chart-line mr-2 text-blue-500"></i> Progress Praktikum
             </h3>
             <div class="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
                 <p class="text-gray-500">Grafik progress akan ditampilkan di sini</p>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <?php

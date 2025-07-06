@@ -213,7 +213,7 @@ if ($result = mysqli_query($link, $sql)) {
             </select>
             <span class="text-red-500 text-xs italic"><?php echo $role_err; ?></span>
         </div>
-        <button type="submit" name="add_user" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Akun</button>
+        <button type="submit" name="add_user" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Akun</button>
     </form>
 </div>
 

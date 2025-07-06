@@ -1,5 +1,7 @@
 <?php
 require_once '../config.php';
+// Pastikan tidak ada output sebelum session_start()
+ob_start(); // Mulai output buffering
 require_once 'templates/header.php'; // Includes check_login_and_role("asisten")
 
 $modul_id = $praktikum_id = "";
@@ -21,17 +23,20 @@ if (isset($_GET["id"]) && !empty(trim($_GET["id"])) && isset($_GET["praktikum_id
         if (mysqli_stmt_execute($stmt)) {
             mysqli_stmt_bind_result($stmt, $judul, $deskripsi, $current_file_materi);
             if (!mysqli_stmt_fetch($stmt)) {
-                echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Modul tidak ditemukan atau Anda tidak memiliki akses.</div>';
+                ob_end_clean(); // Bersihkan output buffer sebelum redirect
+                header("location: error.php?message=Modul tidak ditemukan atau Anda tidak memiliki akses");
                 exit();
             }
         } else {
-            echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Oops! Terjadi kesalahan. Silakan coba lagi nanti.</div>';
+            ob_end_clean();
+            header("location: error.php?message=Oops! Terjadi kesalahan. Silakan coba lagi nanti");
             exit();
         }
         mysqli_stmt_close($stmt);
     }
 } else {
-    header("location: kelola_praktikum.php"); // Redirect if IDs are not provided
+    ob_end_clean();
+    header("location: kelola_praktikum.php");
     exit();
 }
 
@@ -47,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $judul = trim($_POST["judul"]);
     }
     $deskripsi = trim($_POST["deskripsi"]);
-    $file_materi = $_POST["current_file_materi"] ?? null; // Keep existing file by default
+    $file_materi = $_POST["current_file_materi"] ?? null;
 
     // Handle new file upload for update
     if (isset($_FILES["file_materi"]) && $_FILES["file_materi"]["error"] == 0) {
@@ -83,20 +88,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_praktikum_id = $praktikum_id;
             $param_asisten_id = $_SESSION['id'];
             if (mysqli_stmt_execute($stmt)) {
+                ob_end_clean();
                 header("location: kelola_modul.php?praktikum_id=" . $praktikum_id);
                 exit();
             } else {
-                echo '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">Terjadi kesalahan saat memperbarui modul. Silakan coba lagi nanti.</div>';
+                $error_message = "Terjadi kesalahan saat memperbarui modul. Silakan coba lagi nanti.";
             }
             mysqli_stmt_close($stmt);
         }
     }
 }
+ob_end_flush(); // Akhir output buffering dan kirim output
 ?>
 
 <h1 class="text-3xl font-bold mb-6">Edit Modul</h1>
 
 <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <?php if (!empty($error_message)): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <?php echo htmlspecialchars($error_message); ?>
+        </div>
+    <?php endif; ?>
+    
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id=" . $modul_id . "&praktikum_id=" . $praktikum_id; ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="modul_id" value="<?php echo $modul_id; ?>">
         <input type="hidden" name="praktikum_id" value="<?php echo $praktikum_id; ?>">
