@@ -152,7 +152,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
 
             <div class="flex items-center justify-between">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+                <button type="submit" class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
                 <p class="text-sm">Already have an account? <a href="login.php" class="text-blue-500 hover:text-blue-800">Login here</a>.</p>
             </div>
         </form>

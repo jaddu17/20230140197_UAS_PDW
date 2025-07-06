@@ -38,7 +38,7 @@ if ($stmt = mysqli_prepare($link, $sql)) {
 
     <?php if (empty($enrolled_praktikum_list)): ?>
         <p class="text-gray-600">Anda belum mendaftar ke praktikum manapun.</p>
-        <p class="text-gray-600">Kunjungi <a href="<?php echo BASE_URL; ?>mahasiswa/katalog_praktikum.php" class="text-blue-500 hover:text-blue-700">Katalog Praktikum</a> untuk mendaftar.</p>
+        <p class="text-gray-600">Kunjungi <a href="<?php echo BASE_URL; ?>mahasiswa/katalog_praktikum.php" class="text-pink-500 hover:text-pink-700">Katalog Praktikum</a> untuk mendaftar.</p>
     <?php else: ?>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php foreach ($enrolled_praktikum_list as $praktikum): ?>
@@ -46,7 +46,7 @@ if ($stmt = mysqli_prepare($link, $sql)) {
                     <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($praktikum['nama_praktikum']); ?></h3>
                     <p class="text-gray-700 mb-4 flex-grow"><?php echo nl2br(htmlspecialchars($praktikum['deskripsi'])); ?></p> <!-- Added flex-grow -->
                     <a href="<?php echo BASE_URL; ?>mahasiswa/detail_praktikum.php?praktikum_id=<?php echo $praktikum['praktikum_id']; ?>" 
-                       class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full mt-auto text-center">Lihat Detail & Tugas</a> <!-- Added w-full mt-auto text-center -->
+                       class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded w-full mt-auto text-center">Lihat Detail & Tugas</a> <!-- Added w-full mt-auto text-center -->
                 </div>
             <?php endforeach; ?>
         </div>

@@ -191,7 +191,7 @@ if ($stmt_initial) {
                 </select>
             </div>
             <div class="flex justify-end md:col-span-1">
-                <button type="submit" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors">
+                <button type="submit" class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors">
                     Terapkan Filter
                 </button>
                 <button type="button" id="resetFilter" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded ml-2 focus:outline-none focus:shadow-outline transition-colors">
@@ -245,7 +245,7 @@ if ($stmt_initial) {
                                         <textarea name="feedback" rows="2" class="border rounded px-2 py-1 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Tambahkan feedback..."><?= htmlspecialchars($row['feedback'] ?? '') ?></textarea>
                                 </td>
                                 <td class="py-3 px-6 text-center whitespace-nowrap">
-                                        <button type="submit" name="update_laporan" class="bg-pink-500 hover:bg-pink-700 text-white px-3 py-1 rounded text-xs transition-colors mb-2 sm:mb-0">Simpan</button>
+                                        <button type="submit" name="update_laporan" class="bg-blue-500 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs transition-colors mb-2 sm:mb-0">Simpan</button>
                                     </form>
                                     <a href="#" class="delete-report bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded text-xs transition-colors" data-id="<?php echo $row['id']; ?>">Hapus</a>
                                 </td>
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <textarea name="feedback" rows="2" class="border rounded px-2 py-1 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Tambahkan feedback...">${row.feedback || ''}</textarea>
                                 </td>
                                 <td class="py-3 px-6 text-center whitespace-nowrap">
-                                        <button type="submit" name="update_laporan" class="bg-pink-500 hover:bg-pink-700 text-white px-3 py-1 rounded text-xs transition-colors mb-2 sm:mb-0">Simpan</button>
+                                        <button type="submit" name="update_laporan" class="bg-blue-500 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs transition-colors mb-2 sm:mb-0">Simpan</button>
                                     </form>
                                     <a href="#" class="delete-report bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded text-xs transition-colors" data-id="${row.id}">Hapus</a>
                                 </td>

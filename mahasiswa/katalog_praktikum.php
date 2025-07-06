@@ -119,7 +119,7 @@ if ($stmt = mysqli_prepare($link, $sql_cek)) {
                             </button>
                         <?php else: ?>
                             <button type="submit" name="daftar"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                                class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded w-full">
                                 Daftar Praktikum
                             </button>
                         <?php endif; ?>

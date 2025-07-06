@@ -42,30 +42,30 @@ check_login_and_role("mahasiswa");
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
     <!-- Sidebar -->
-    <aside class="sidebar fixed h-full bg-indigo-700 text-white p-4 flex flex-col shadow-lg">
+    <aside class="sidebar fixed h-full bg-blue-300 text-white p-4 flex flex-col shadow-lg">
         <div class="text-2xl font-bold mb-8 text-center">KELASKU</div>
         <ul class="flex flex-col space-y-4">
             <li>
                 <a href="<?php echo BASE_URL; ?>mahasiswa/dashboard.php"
-                   class="block py-2 px-4 rounded hover:bg-indigo-600">
+                   class="block py-2 px-4 rounded hover:bg-blue-300">
                     Dashboard
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL; ?>mahasiswa/katalog_praktikum.php"
-                   class="block py-2 px-4 rounded hover:bg-indigo-600">
+                   class="block py-2 px-4 rounded hover:bg-blue-300">
                     Katalog Praktikum
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL; ?>mahasiswa/praktikum_saya.php"
-                   class="block py-2 px-4 rounded hover:bg-indigo-600">
+                   class="block py-2 px-4 rounded hover:bg-blue-300">
                     Praktikum Saya
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL; ?>logout.php"
-                   class="block py-2 px-4 rounded hover:bg-indigo-600">
+                   class="block py-2 px-4 rounded hover:bg-blue-300">
                     Logout
                 </a>
             </li>

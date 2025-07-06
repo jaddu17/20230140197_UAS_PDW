@@ -217,7 +217,7 @@ if ($result_praktikum_dropdown = mysqli_query($link, $sql_praktikum_dropdown)) {
             <input type="file" name="file_materi" id="file_materi" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline <?php echo (!empty($file_materi_err)) ? 'border-red-500' : ''; ?>">
             <span class="text-red-500 text-xs italic"><?php echo $file_materi_err; ?></span>
         </div>
-        <button type="submit" name="add_modul" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Modul</button>
+        <button type="submit" name="add_modul" class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Modul</button>
     </form>
 </div>
 

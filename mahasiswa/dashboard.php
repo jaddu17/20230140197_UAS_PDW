@@ -97,7 +97,7 @@ $stats = getMahasiswaStats($link, $mahasiswa_id);
 <body class="bg-gray-50">
     <div class="container mx-auto px-4 py-8">
         <!-- Header Selamat Datang -->
-        <div class="bg-gradient-to-r from-blue-500 to-cyan-400 text-white p-8 rounded-xl shadow-lg mb-8">
+        <div class="bg-gradient-to-r from-pink-300 to-cyan-400 text-white p-8 rounded-xl shadow-lg mb-8">
             <h1 class="text-3xl font-bold">Selamat Datang Kembali, <?= htmlspecialchars($_SESSION['nama']) ?>!</h1>
             <p class="mt-2 opacity-90">Terus semangat dalam menyelesaikan semua modul praktikummu.</p>
         </div>
@@ -199,7 +199,7 @@ $stats = getMahasiswaStats($link, $mahasiswa_id);
         <!-- Grafik Progress (Opsional) - DIHAPUS -->
         <!-- <div class="bg-white p-6 rounded-xl shadow-md mt-8">
             <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                <i class="fas fa-chart-line mr-2 text-blue-500"></i> Progress Praktikum
+                <i class="fas fa-chart-line mr-2 text-pink-500"></i> Progress Praktikum
             </h3>
             <div class="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
                 <p class="text-gray-500">Grafik progress akan ditampilkan di sini</p>

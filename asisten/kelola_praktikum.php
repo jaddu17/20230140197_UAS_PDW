@@ -128,7 +128,7 @@ if (!empty($global_error_message)) {
             <label for="deskripsi" class="block text-gray-700 text-sm font-bold mb-2">Deskripsi:</label>
             <textarea name="deskripsi" id="deskripsi" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"><?php echo htmlspecialchars($deskripsi); ?></textarea>
         </div>
-        <button type="submit" name="add_praktikum" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Praktikum</button>
+        <button type="submit" name="add_praktikum" class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Tambah Praktikum</button>
     </form>
 </div>
 

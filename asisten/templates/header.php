@@ -40,41 +40,41 @@ check_login_and_role("asisten"); // Check if logged in as asisten
 </head>
 <body class="bg-gray-100 flex h-screen">
     <!-- Sidebar -->
-    <aside class="sidebar fixed h-full bg-pink-300 text-white p-4 flex flex-col shadow-lg">
+    <aside class="sidebar fixed h-full bg-blue-300 text-white p-4 flex flex-col shadow-lg">
         <div class="mb-8 text-center">
             <div class="text-2xl font-bold">KELASKU</div>
-            <div class="text-base font-semibold text-pink-800">Asisten</div>
+            <div class="text-base font-semibold text-blue-800">Asisten</div>
         </div>
         <ul class="flex flex-col space-y-4">
             <li>
-                <a href="<?php echo BASE_URL; ?>asisten/dashboard.php" class="block py-2 px-4 rounded hover:bg-pink-600">
+                <a href="<?php echo BASE_URL; ?>asisten/dashboard.php" class="block py-2 px-4 rounded hover:bg-blue-600">
                     Dashboard
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL; ?>asisten/kelola_praktikum.php" class="block py-2 px-4 rounded hover:bg-pink-600">
+                <a href="<?php echo BASE_URL; ?>asisten/kelola_praktikum.php" class="block py-2 px-4 rounded hover:bg-blue-600">
                     Kelola Praktikum
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL; ?>asisten/kelola_modul.php" class="block py-2 px-4 rounded hover:bg-pink-600">
+                <a href="<?php echo BASE_URL; ?>asisten/kelola_modul.php" class="block py-2 px-4 rounded hover:bg-blue-600">
                     Kelola Modul
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL; ?>asisten/laporan_masuk.php" class="block py-2 px-4 rounded hover:bg-pink-600">
+                <a href="<?php echo BASE_URL; ?>asisten/laporan_masuk.php" class="block py-2 px-4 rounded hover:bg-blue-600">
                     Laporan Masuk
                 </a>
             </li>
             <!-- [End Tambahan] -->
 
             <li>
-                <a href="<?php echo BASE_URL; ?>asisten/kelola_akun.php" class="block py-2 px-4 rounded hover:bg-pink-600">
+                <a href="<?php echo BASE_URL; ?>asisten/kelola_akun.php" class="block py-2 px-4 rounded hover:bg-blue-600">
                     Kelola Akun
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL; ?>logout.php" class="block py-2 px-4 rounded hover:bg-pink-600">
+                <a href="<?php echo BASE_URL; ?>logout.php" class="block py-2 px-4 rounded hover:bg-blue-600">
                     Logout
                 </a>
             </li>
